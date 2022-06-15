@@ -7,6 +7,8 @@ const Book = (props) => {
         book: PropTypes.object.isRequired,
         onUpdateShelf: PropTypes.func.isRequired
     }
+    const {book, onUpdateShelf} = props;
+
     return (
 
         <div className="book">
@@ -14,13 +16,14 @@ const Book = (props) => {
                 <div className="book-cover" style={{
                     width: 128,
                     height: 193,
-                    backgroundImage: props.book.imageLinks && `url(${props.book.imageLinks.thumbnail})`
+                    backgroundImage: book.imageLinks && `url(${book.imageLinks.thumbnail})`
                 }}/>
-                <BookShelfChanger book={props.book} onUpdateShelf={props.onUpdateShelf}/>
+
+                <BookShelfChanger book={book} onUpdateShelf={onUpdateShelf}/>
             </div>
-            <div className="book-title">{props.book && props.book.title}</div>
+            <div className="book-title">{book && book.title}</div>
             <div className="book-authors">
-                {props.book.authors && props.book.authors.map((author, key) => {
+                {book.authors && book.authors.map((author, key) => {
                     return <div key={key}>{author}</div>
                 })}
             </div>

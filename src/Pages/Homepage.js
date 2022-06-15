@@ -6,30 +6,32 @@ import {Link} from "react-router-dom";
 
 const Homepage = (props) => {
     Homepage.propTypes = {
-        Books: PropTypes.array.isRequired,
+        books: PropTypes.array.isRequired,
         onUpdateShelf: PropTypes.func.isRequired
     }
+    const {books, onUpdateShelf} = props;
+
     return (
         <div className="app">
             <div className="list-books-title">
                 <h1>MyReads-A Book Tracking App</h1>
             </div>
-            {props.Books.length ? (
+            {books.length ? (
                     <>
                         <BookShelf
                             title="Currently Reading"
-                            books={props.Books.filter((book) => book.shelf === 'currentlyReading')}
-                            onUpdateShelf={props.onUpdateShelf}
+                            books={books.filter((book) => book.shelf === 'currentlyReading')}
+                            onUpdateShelf={onUpdateShelf}
                         />
                         <BookShelf
                             title="Want to Read"
-                            books={props.Books.filter((book) => book.shelf === 'wantToRead')}
-                            onUpdateShelf={props.onUpdateShelf}
+                            books={books.filter((book) => book.shelf === 'wantToRead')}
+                            onUpdateShelf={onUpdateShelf}
                         />
                         <BookShelf
                             title="Read"
-                            books={props.Books.filter((book) => book.shelf === 'read')}
-                            onUpdateShelf={props.onUpdateShelf}
+                            books={books.filter((book) => book.shelf === 'read')}
+                            onUpdateShelf={onUpdateShelf}
                         />
                         <Link to='/search'>
                             <div className="open-search"/>

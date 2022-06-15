@@ -7,24 +7,41 @@ import PropTypes from "prop-types";
 const BooksSearch = (props) => {
 
     BooksSearch.propTypes = {
-        onUpdateShelf: PropTypes.func.isRequired
+        onUpdateShelf: PropTypes.func.isRequired,
+        books: PropTypes.array.isRequired
     }
+    const {books, onUpdateShelf} = props;
+
     const [query, setQuery] = useState("");
-    const [books, setBooks] = useState([]);
+    const [bookSearchResult, setBookSearchResult] = useState([]);
 
     const searchForQuery = (event) => {
         setQuery(event.target.value);
 
-        if (query.trim() === "") {
-            setBooks([]);
+        if (event.target.value.trim() === "") {
+            setBookSearchResult([]);
             return;
         }
 
-        BooksAPI.search(query.trim()).then((searchResult) => {
+        BooksAPI.search(event.target.value.trim()).then((searchResult) => {
             if (searchResult.error) {
-                setBooks([]);
-            } else setBooks(searchResult)
-        }).catch(() => setBooks([]));
+                setBookSearchResult([]);
+            } else {
+                setBookSearchResult(adjustShelves(searchResult));
+            }
+        }).catch(() => setBookSearchResult([]));
+    }
+
+    const adjustShelves = (searchResult) => {
+        return searchResult.map(result => {
+            result.shelf = 'none';
+            books.forEach(book => {
+                if (result.id === book.id) {
+                    result.shelf = book.shelf;
+                }
+            })
+            return result;
+        });
     }
 
     return (
@@ -46,8 +63,9 @@ const BooksSearch = (props) => {
             <div style={{marginTop: '100px',}}>
                 <div className="bookshelf-books">
                     <ol className="books-grid">
-                        {books && books.length > 0 &&
-                        books.map((book) => <Book key={book.id} book={book} onUpdateShelf={props.onUpdateShelf}/>)}
+                        {bookSearchResult && bookSearchResult.length > 0 &&
+                        bookSearchResult.map((book) => <Book key={book.id} book={book}
+                                                             onUpdateShelf={onUpdateShelf}/>)}
                     </ol>
                 </div>
             </div>

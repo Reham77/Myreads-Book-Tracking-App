@@ -9,14 +9,16 @@ const BookShelf = (props) => {
         books: PropTypes.array.isRequired,
         onUpdateShelf: PropTypes.func.isRequired
     }
+    const {title, books, onUpdateShelf} = props;
+
     return (
         <div className="bookshelf">
-            <h2 className="bookshelf-title">{props.title}</h2>
-            {props.books.length ? (
+            <h2 className="bookshelf-title">{title}</h2>
+            {books.length ? (
                     <div className="bookshelf-books">
                         <ol className="books-grid">
-                            {props.books.map((book) =>
-                                <Book key={book.id} book={book} onUpdateShelf={props.onUpdateShelf}/>
+                            {books.map((book) =>
+                                <Book key={book.id} book={book} onUpdateShelf={onUpdateShelf}/>
                             )}
                         </ol>
                     </div>

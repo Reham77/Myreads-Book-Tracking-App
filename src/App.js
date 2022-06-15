@@ -7,25 +7,28 @@ import Homepage from "./Pages/Homepage";
 import BooksSearch from "./Pages/BooksSearch";
 
 const App = () => {
-    const [Books, setBooks] = useState([]);
+    const [books, setBooks] = useState([]);
 
     const getAllBooks = () => {
         BooksAPI.getAll().then((books) => setBooks(books))
     }
-    const onUpdateShelf = (bookToBeUpdated, shelf) => {
-        BooksAPI.update(bookToBeUpdated, shelf).then(() => {
-            getAllBooks();
-        })
-    }
+
+    const onUpdateShelf = (book, shelf) => {
+        book.shelf = shelf;
+        BooksAPI.update(book, shelf).then(() => {
+            setBooks([...books.filter((b) => b.id !== book.id), book]);
+        });
+    };
+
     useEffect(() => {
         getAllBooks();
-    }, [onUpdateShelf])
+    }, [])
 
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" exact element={<Homepage Books={Books} onUpdateShelf={onUpdateShelf}/>}/>
-                <Route path='/search' element={<BooksSearch onUpdateShelf={onUpdateShelf}/>}/>
+                <Route path="/" exact element={<Homepage books={books} onUpdateShelf={onUpdateShelf}/>}/>
+                <Route path='/search' element={<BooksSearch books={books} onUpdateShelf={onUpdateShelf}/>}/>
             </Routes>
         </BrowserRouter>
     )

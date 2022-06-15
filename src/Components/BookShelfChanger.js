@@ -6,11 +6,12 @@ const BookShelfChanger = (props) => {
         book: PropTypes.object.isRequired,
         onUpdateShelf: PropTypes.func.isRequired
     }
+    const {book, onUpdateShelf} = props;
     return (
         <div className="book-shelf-changer">
             <select
-                value={props.book.shelf || 'none'}
-                onChange={(event) => props.onUpdateShelf(props.book, event.target.value)}
+                value={book.shelf || 'none'}
+                onChange={(event) => onUpdateShelf(book, event.target.value)}
             >
 
                 <option value="move" disabled>
