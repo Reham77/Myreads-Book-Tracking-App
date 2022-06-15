@@ -7,7 +7,7 @@
 - Install all project dependencies: 
 ``npm install
 ``
-<br>
+
 - Run project in development environment
 ``npm start
 ``
