@@ -9,6 +9,6 @@
 ``
 <br>
 - Run project in development environment
-  ``npm start
-  ``
+``npm start
+``
 <br>
