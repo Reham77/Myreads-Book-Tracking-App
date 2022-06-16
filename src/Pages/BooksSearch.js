@@ -3,6 +3,8 @@ import {Link} from "react-router-dom";
 import * as BooksAPI from '../Services/BooksAPI'
 import Book from "../Components/Book";
 import PropTypes from "prop-types";
+import {DebounceInput} from 'react-debounce-input'
+
 
 const BooksSearch = (props) => {
 
@@ -14,6 +16,7 @@ const BooksSearch = (props) => {
 
     const [query, setQuery] = useState("");
     const [bookSearchResult, setBookSearchResult] = useState([]);
+
 
     const searchForQuery = (event) => {
         setQuery(event.target.value);
@@ -44,6 +47,7 @@ const BooksSearch = (props) => {
         });
     }
 
+
     return (
         <div className="search-books">
             <div className="search-books-bar">
@@ -52,7 +56,8 @@ const BooksSearch = (props) => {
                 </Link>
 
                 <div className="search-books-input-wrapper">
-                    <input
+                    <DebounceInput
+                        debounceTimeout={300}
                         onChange={searchForQuery}
                         value={query}
                         type="text"
